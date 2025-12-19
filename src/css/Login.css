@@ -1,0 +1,115 @@
+* {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+
+    background-color: black;
+    color: snow;
+
+}
+
+.log {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: center;
+
+    gap: 25px;
+}
+
+.olog {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.lh {
+    text-align: center;
+    transition: .5s;
+
+}
+
+.lh:hover {
+    letter-spacing: 0.5px;
+    transition: 0.5s;
+    color: gold;
+}
+
+.newl {
+    text-decoration: none;
+    color: snow;
+
+}
+
+.new {
+    text-align: center;
+    color: snow;
+    text-decoration: none;
+}
+
+
+.username {
+    height: 30px;
+    text-align: center;
+    transition: .5s;
+
+    border-radius: 5px;
+}
+
+.username:hover {
+    scale: 1.05;
+    transition: .5s;
+}
+
+.pass {
+    height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    transition: .5s;
+
+}
+
+.pass:hover {
+    scale: 1.05;
+    transition: .5s;
+}
+
+.login {
+    border-radius: 5px;
+    height: 30px;
+    text-align: center;
+    background-color: black;
+    color: snow;
+    border: 1px solid snow;
+    transition: 0.5s;
+    width: 100%;
+}
+
+.login:hover {
+    scale: 1.05;
+    transition: 0.5s;
+    text-align: center;
+    background-color: snow;
+    color: black;
+    border: 1px solid rgb(0, 0, 0);
+    font-weight: bolder;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

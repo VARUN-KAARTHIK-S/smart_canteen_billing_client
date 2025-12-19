@@ -1,0 +1,74 @@
+* {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.sh {
+    text-align: center;
+}
+
+.osignup {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.signup-btn {
+    border-radius: 5px;
+    height: 30px;
+    text-align: center;
+    background-color: black;
+    color: snow;
+    border: 1px solid snow;
+    transition: 0.5s;
+    width: 100%;
+}
+
+.signup-btn:hover {
+    scale: 1.05;
+    transition: 0.5s;
+    text-align: center;
+    background-color: snow;
+    color: black;
+    border: 1px solid rgb(0, 0, 0);
+    font-weight: bolder;
+}
+
+.username {
+    height: 30px;
+}
+
+.pass {
+    height: 30px;
+}
+.email{
+    height: 30px;
+    text-align: center;
+}
+.sh:hover {
+    letter-spacing: 0.5px;
+    transition: 0.5s;
+    color: gold;
+}
+
+.sh {
+    text-align: center;
+    transition: 0.5s;
+}
+
+.body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
