@@ -16,7 +16,7 @@ const OrderHistory = () => {
             const user = JSON.parse(localStorage.getItem('user'))
             if (user && user.email) {
                 try {
-                    const response = await axios.get(`http://localhost:5000/scp/orders/history/${user.email}`)
+                    const response = await axios.get(`https://smart-canteen-billing-server.onrender.com/scp/orders/history/${user.email}`)
                     setOrderHistory(response.data)
                     localStorage.setItem('orderHistory', JSON.stringify(response.data))
                 } catch (apiError) {

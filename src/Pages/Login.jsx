@@ -12,7 +12,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('http://localhost:5000/scp/signin', {
+      const response = await axios.post('https://smart-canteen-billing-server.onrender.com/scp/signin', {
         email,
         password
       })

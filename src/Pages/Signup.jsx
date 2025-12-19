@@ -16,7 +16,7 @@ const Signup = () => {
       return;
     }
     try {
-      await axios.post('http://localhost:5000/scp/signup', {
+      await axios.post('https://smart-canteen-billing-server.onrender.com/scp/signup', {
         name: username,
         email,
         password

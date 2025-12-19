@@ -23,7 +23,7 @@ const Admindash = () => {
 
     const fetchMenu = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/scp/menu')
+            const response = await axios.get('https://smart-canteen-billing-server.onrender.com/scp/menu')
             setMenu(response.data)
         } catch (error) {
             console.error('Error fetching menu:', error)
@@ -32,7 +32,7 @@ const Admindash = () => {
 
     const fetchOrders = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/scp/orders/all')
+            const response = await axios.get('https://smart-canteen-billing-server.onrender.com/scp/orders/all')
             setOrders(response.data)
         } catch (error) {
             console.error('Error fetching orders:', error)
@@ -41,7 +41,7 @@ const Admindash = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/scp/users')
+            const response = await axios.get('https://smart-canteen-billing-server.onrender.com/scp/users')
             setUsers(response.data)
         } catch (error) {
             console.error('Error fetching users:', error)
@@ -59,7 +59,7 @@ const Admindash = () => {
                 image: form.image || 'https://via.placeholder.com/150'
             }
 
-            await axios.post('http://localhost:5000/scp/menu', newItem)
+            await axios.post('https://smart-canteen-billing-server.onrender.com/scp/menu', newItem)
             fetchMenu()
             setForm({ name: "", price: "", quantity: "", image: "" })
         } catch (error) {
@@ -70,7 +70,7 @@ const Admindash = () => {
     const updateItem = async (id, field, value) => {
         try {
             const updateData = { [field]: field === 'name' ? value : Number(value) }
-            await axios.put(`http://localhost:5000/scp/menu/${id}`, updateData)
+            await axios.put(`https://smart-canteen-billing-server.onrender.com/scp/menu/${id}`, updateData)
             fetchMenu()
         } catch (error) {
             console.error('Error updating item:', error)
@@ -79,7 +79,7 @@ const Admindash = () => {
 
     const deleteItem = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/scp/menu/${id}`)
+            await axios.delete(`https://smart-canteen-billing-server.onrender.com/scp/menu/${id}`)
             fetchMenu()
         } catch (error) {
             console.error('Error deleting item:', error)
@@ -88,7 +88,7 @@ const Admindash = () => {
 
     const updateOrderStatus = async (orderId, status) => {
         try {
-            await axios.put(`http://localhost:5000/scp/orders/${orderId}`, { status })
+            await axios.put(`https://smart-canteen-billing-server.onrender.com/scp/orders/${orderId}`, { status })
             fetchOrders()
         } catch (error) {
             console.error('Error updating order:', error)
@@ -98,7 +98,7 @@ const Admindash = () => {
     const deleteUser = async (id) => {
         if (window.confirm("Are you sure you want to delete this user?")) {
             try {
-                await axios.delete(`http://localhost:5000/scp/users/${id}`)
+                await axios.delete(`https://smart-canteen-billing-server.onrender.com/scp/users/${id}`)
                 fetchUsers()
             } catch (error) {
                 console.error('Error deleting user:', error)

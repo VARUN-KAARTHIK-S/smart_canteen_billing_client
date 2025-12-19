@@ -127,7 +127,7 @@ const Userdashboard = () => {
             }
 
             try {
-                await axios.post('http://localhost:5000/scp/orders', orderData)
+                await axios.post('https://smart-canteen-billing-server.onrender.com/scp/orders', orderData)
                 setOrders(prev => [newOrder, ...prev])
                 setCart([])
                 localStorage.setItem('currentOrders', JSON.stringify([newOrder, ...orders]))
@@ -150,7 +150,7 @@ const Userdashboard = () => {
             localStorage.setItem('currentOrders', JSON.stringify(updatedOrders))
 
             try {
-                await axios.put(`http://localhost:5000/scp/orders/${orderId}`, {
+                await axios.put(`https://smart-canteen-billing-server.onrender.com/scp/orders/${orderId}`, {
                     collected: true,
                     collectedTime: new Date()
                 })
