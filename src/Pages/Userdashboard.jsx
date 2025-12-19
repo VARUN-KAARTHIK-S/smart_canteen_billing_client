@@ -22,7 +22,7 @@ const Userdashboard = () => {
 
     const fetchMenuItems = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/scp/menu')
+            const response = await axios.get('https://smart-canteen-billing-server.onrender.com/scp/menu')
             setMenuItems(response.data)
             localStorage.setItem('menuItems', JSON.stringify(response.data))
         } catch (error) {
@@ -31,14 +31,8 @@ const Userdashboard = () => {
             if (savedMenu) {
                 setMenuItems(JSON.parse(savedMenu))
             } else {
-                const mockData = [
-                    { _id: '1', name: 'Dosa', price: 15, quantity: 10, image: 'https://via.placeholder.com/150' },
-                    { _id: '2', name: 'Tea', price: 10, quantity: 10, image: 'https://via.placeholder.com/150' },
-                    { _id: '3', name: 'Coffee', price: 20, quantity: 10, image: 'https://via.placeholder.com/150' },
-                    { _id: '4', name: 'Veg-Puff', price: 15, quantity: 10, image: 'https://via.placeholder.com/150' }
-                ]
-                setMenuItems(mockData)
-                localStorage.setItem('menuItems', JSON.stringify(mockData))
+                // Mock data removed to prevent misleading inventory.
+                setMenuItems([])
             }
         }
     }
@@ -48,7 +42,7 @@ const Userdashboard = () => {
             const user = JSON.parse(localStorage.getItem('user'))
             if (user) {
                 try {
-                    const response = await axios.get(`http://localhost:5000/scp/orders/${user.email}`)
+                    const response = await axios.get(`https://smart-canteen-billing-server.onrender.com/scp/orders/${user.email}`)
                     const activeOrders = response.data.filter(order => order.collected !== true)
                     setOrders(activeOrders)
                     localStorage.setItem('currentOrders', JSON.stringify(activeOrders))
@@ -67,22 +61,8 @@ const Userdashboard = () => {
     const addToCart = async (itemId) => {
         const item = menuItems.find(item => item._id === itemId)
         if (item && item.quantity > 0) {
-            const updatedMenuItems = menuItems.map(menuItem =>
-                menuItem._id === itemId
-                    ? { ...menuItem, quantity: menuItem.quantity - 1 }
-                    : menuItem
-            )
-            setMenuItems(updatedMenuItems)
-            localStorage.setItem('menuItems', JSON.stringify(updatedMenuItems))
-
-            try {
-                await axios.put(`http://localhost:5000/scp/menu/${itemId}`, {
-                    quantity: item.quantity - 1
-                })
-            } catch (error) {
-                console.log('API not available, using local storage')
-            }
-
+            // Do not decrement local menuItems state.
+            // Only update cart.
             setCart(prev => {
                 const existingItem = prev.find(cartItem => cartItem._id === itemId)
                 if (existingItem) {
@@ -96,6 +76,11 @@ const Userdashboard = () => {
                 }
             })
         }
+    }
+
+    const getCartQuantity = (itemId) => {
+        const cartItem = cart.find(item => item._id === itemId)
+        return cartItem ? cartItem.cartQuantity : 0
     }
 
     const getTotal = () => {
@@ -127,10 +112,13 @@ const Userdashboard = () => {
             }
 
             try {
+                // Use production Render URL
                 await axios.post('https://smart-canteen-billing-server.onrender.com/scp/orders', orderData)
                 setOrders(prev => [newOrder, ...prev])
                 setCart([])
                 localStorage.setItem('currentOrders', JSON.stringify([newOrder, ...orders]))
+                // Refresh menu items to reflect new stock
+                fetchMenuItems();
             } catch (apiError) {
                 console.log('API not available, using local storage')
                 setOrders(prev => [newOrder, ...prev])
@@ -150,6 +138,7 @@ const Userdashboard = () => {
             localStorage.setItem('currentOrders', JSON.stringify(updatedOrders))
 
             try {
+                // Use production Render URL
                 await axios.put(`https://smart-canteen-billing-server.onrender.com/scp/orders/${orderId}`, {
                     collected: true,
                     collectedTime: new Date()
@@ -162,10 +151,9 @@ const Userdashboard = () => {
         }
     }
 
-
-
     return (
         <div className="outer-user">
+            {/* ... [header omitted] ... */}
             <div className='top-user'>
                 <div className="left">
                     <p className="tit">Smart_Canteen_Billing</p>
@@ -201,9 +189,9 @@ const Userdashboard = () => {
                                 <button
                                     className="add"
                                     onClick={() => addToCart(item._id)}
-                                    disabled={item.quantity === 0}
+                                    disabled={getCartQuantity(item._id) >= item.quantity}
                                 >
-                                    {item.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                                    {item.quantity === 0 ? 'Out of Stock' : (getCartQuantity(item._id) >= item.quantity ? 'Limit Reached' : 'Add to Cart')}
                                 </button>
                             </div>
                         </div>
